@@ -8,5 +8,6 @@
     <string name="title_activity_show_order_detail">ShowOrderDetailActivity</string>
 =======
     <string name="title_activity_product">Product</string>
+    <string name="title_activity_wait">wait</string>
 >>>>>>> origin/master
 </resources>
