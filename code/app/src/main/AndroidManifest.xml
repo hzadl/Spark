@@ -23,9 +23,16 @@
             android:label="@string/title_activity_input_order_number" >
         </activity>
         <activity
+<<<<<<< HEAD
             android:name=".ShowOrderDetailActivity"
             android:label="@string/title_activity_show_order_detail" >
+=======
+            android:name=".ProductActivity"
+            android:label="@string/title_activity_product" >
+>>>>>>> origin/master
         </activity>
     </application>
 
+    <meta-data android:name="application-type" android:value="vaa_merchant"/>
+    <meta-data android:name="ip-addresses" android:value="0.0.0.0/0" />
 </manifest>
