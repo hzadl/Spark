@@ -6,11 +6,11 @@
     <string name="title_activity_input_order_number">inputOrderNumberActivity</string>
 
     <string name="title_activity_show_order_detail">ShowOrderDetailActivity</string>
-=======
+
     <string name="title_activity_product">Product</string>
     <string name="title_activity_wait">wait</string>
 >>>>>>> origin/master
 =======
+
     <string name="title_activity_order_confirmation">OrderConfirmationActivity</string>
->>>>>>> Stashed changes
 </resources>
