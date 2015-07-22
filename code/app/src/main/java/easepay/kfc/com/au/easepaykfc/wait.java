@@ -38,8 +38,6 @@ public class wait extends ActionBarActivity {
     }
 
     public void okBtnClicked(View view){
-        System.out.println("ok clicked");
-//        Intent i = new Intent(getApplicationContext(), OrderInfoActivity.class);
-//        startActivity(i);
+        finish();
     }
 }
