@@ -8,6 +8,9 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="com.aevi.permission.CONFIGURATION" />
+    <uses-permission android:name="com.aevi.permission.PAYMENT_REQUEST" />
+    <uses-permission android:name="com.aevi.permission.PRINT_SERVICE" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -30,6 +33,14 @@
             android:name=".ProductActivity"
             android:label="@string/title_activity_product" >
         </activity>
+        <activity
+            android:name=".ShowOrderDetailActivity"
+            android:label="@string/title_activity_show_order_detail" >
+        </activity>
+        <activity
+            android:name=".wait"
+            android:label="@string/title_activity_wait" >
+        </activity>        
     </application>
 
     <meta-data android:name="application-type" android:value="vaa_merchant"/>

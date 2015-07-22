@@ -1,27 +1,28 @@
-package easepay.kfc.com.au.easepaykfc;
+package easepay.kfc.com.au.easepaykfc.easepay.kfc.com.au.easepaykfc.model;
 
-import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
-import easepay.kfc.com.au.easepaykfc.easepay.kfc.com.au.easepaykfc.model.Product;
+import easepay.kfc.com.au.easepaykfc.R;
 
+/**
+ * Created by user on 2015/7/22.
+ */
 
-public class MainActivity extends ActionBarActivity {
+public class okBtnActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_input_order_number);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_input_order_number, menu);
         return true;
     }
 
@@ -39,17 +40,4 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-    public void collectBtnClicked(View view){
-        System.out.println("collect clicked");
-        Intent i = new Intent(this, inputOrderNumberActivity.class);
-        startActivity(i);
-    }
-
-    public void newBtnClicked(View view){
-        System.out.println("new clicked");
-        Intent i = new Intent(this, ProductActivity.class);
-        startActivity(i);
-    }
-
 }

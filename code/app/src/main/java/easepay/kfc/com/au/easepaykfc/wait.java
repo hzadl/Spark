@@ -7,21 +7,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import easepay.kfc.com.au.easepaykfc.easepay.kfc.com.au.easepaykfc.model.Product;
 
-
-public class MainActivity extends ActionBarActivity {
+public class wait extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_wait);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_wait, menu);
         return true;
     }
 
@@ -40,16 +38,9 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void collectBtnClicked(View view){
-        System.out.println("collect clicked");
-        Intent i = new Intent(this, inputOrderNumberActivity.class);
+    public void okBtnClicked(View view){
+        Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
+        finish();
     }
-
-    public void newBtnClicked(View view){
-        System.out.println("new clicked");
-        Intent i = new Intent(this, ProductActivity.class);
-        startActivity(i);
-    }
-
 }
