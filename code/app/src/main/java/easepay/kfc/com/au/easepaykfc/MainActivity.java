@@ -7,6 +7,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import easepay.kfc.com.au.easepaykfc.easepay.kfc.com.au.easepaykfc.model.Product;
+
 
 public class MainActivity extends ActionBarActivity {
 
@@ -46,7 +48,7 @@ public class MainActivity extends ActionBarActivity {
 
     public void newBtnClicked(View view){
         System.out.println("new clicked");
-//        Intent i = new Intent(getApplicationContext(), OrderInfoActivity.class);
-//        startActivity(i);
+        Intent i = new Intent(this, ProductActivity.class);
+        startActivity(i);
     }
 }
