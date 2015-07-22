@@ -1,51 +1,52 @@
 package easepay.kfc.com.au.easepaykfc;
 
-import android.content.Intent;
 import android.os.Parcelable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.aevi.payment.PaymentRequest;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Currency;
+
+import easepay.kfc.com.au.easepaykfc.R;
 import easepay.kfc.com.au.easepaykfc.easepay.kfc.com.au.easepaykfc.model.Product;
 
+public class OrderConfirmationActivity extends ActionBarActivity {
 
-public class inputOrderNumberActivity extends ActionBarActivity {
-
-    static ArrayList<Product> products = new ArrayList<Product>();
+    boolean paid = false;
+    Double totalPrice = 0.0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_input_order_number);
+        setContentView(R.layout.activity_order_confirmation);
+        TextView list = (TextView) findViewById(R.id.product_list);
+        TextView price = (TextView) findViewById(R.id.price);
+        String content = "";
 
-        for(int i=0;i<10;i++){
-            Product p = new Product();
-            p.setName("product"+i);
-            p.setPrice((i + 1) * 2);
-            products.add(p);
+        for(Product p:inputOrderNumberActivity.products){
+            content += p.getName()+" $"+p.getPrice()+"\n";
+            totalPrice+=p.getPrice();
         }
+        list.setText(content);
+        price.setText(""+totalPrice);
+        boolean paid = true;
+        if(paid){
 
-
-        EditText editText = (EditText) findViewById(R.id.order_number);
-        editText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("Done clicked");
-            }
-        });
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_input_order_number, menu);
+        getMenuInflater().inflate(R.menu.menu_order_confirmation, menu);
         return true;
     }
 
@@ -64,12 +65,15 @@ public class inputOrderNumberActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void confirmBtnClicked(View view){
-        System.out.println("Done clicked");
-        //TODO:send code to server and validate data, send order information back
-        Intent i = new Intent(this, OrderConfirmationActivity.class);
-        startActivity(i);
+    public void nextBtnClicked(View view){
+        if(paid){
+
+        }else{
+            PaymentRequest payment = new PaymentRequest(new BigDecimal(totalPrice));
+            payment.setCurrency(Currency.getInstance("AUD"));
+
+            // Launch the Payment app.
+            startActivityForResult(payment.createIntent(), 0);
+        }
     }
-
-
 }

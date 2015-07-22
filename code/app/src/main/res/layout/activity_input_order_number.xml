@@ -21,16 +21,20 @@
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
-        android:id="@+id/editText"
+        android:id="@+id/order_number"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:imeOptions="actionDone"
+        />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Confirm"
         android:id="@+id/button3"
-        android:layout_below="@+id/editText"
+        android:layout_marginTop="98dp"
+        android:layout_below="@+id/order_number"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="84dp" />
+        android:onClick="confirmBtnClicked"
+        />
 </RelativeLayout>

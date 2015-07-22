@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="easepay.kfc.com.au.easepaykfc" >
 
+
     <uses-permission android:name="com.aevi.permission.CONFIGURATION" />
     <uses-permission android:name="com.aevi.permission.PAYMENT_REQUEST" />
 
@@ -11,6 +12,7 @@
     <meta-data
         android:name="ip-addresses"
         android:value="0.0.0.0/0" />
+
 
     <application
         android:allowBackup="true"
@@ -31,6 +33,7 @@
             android:label="@string/title_activity_input_order_number" >
         </activity>
         <activity
+
             android:name=".ShowOrderDetailActivity"
             android:label="@string/title_activity_show_order_detail" >
         </activity>
