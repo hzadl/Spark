@@ -5,18 +5,20 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.aevi.payment.PaymentRequest;
 
 import java.math.BigDecimal;
 import java.util.Currency;
+import java.util.List;
 
 import easepay.kfc.com.au.easepaykfc.model.Product;
 
 public class OrderConfirmationActivity extends ActionBarActivity {
 
-    boolean paid = false;
+    boolean isPaid = true;
     Double totalPrice = 0.0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,17 +27,21 @@ public class OrderConfirmationActivity extends ActionBarActivity {
         setContentView(R.layout.activity_order_confirmation);
         TextView list = (TextView) findViewById(R.id.product_list);
         TextView price = (TextView) findViewById(R.id.price);
+        Button next = (Button) findViewById(R.id.next_step);
         String content = "";
-
-        for(Product p:inputOrderNumberActivity.products){
+        List<Product> products = inputOrderNumberActivity.order.getProducts();
+        isPaid = inputOrderNumberActivity.order.isPaid();
+        for(Product p:products){
             content += p.getName()+" $"+p.getPrice()+"\n";
             totalPrice+=p.getPrice();
         }
         list.setText(content);
         price.setText(""+totalPrice);
-        boolean paid = true;
-        if(paid){
 
+        if(isPaid){
+            next.setText("Print Receipt");
+        }else {
+            next.setText("Pay Now");
         }
     }
 
@@ -62,7 +68,7 @@ public class OrderConfirmationActivity extends ActionBarActivity {
     }
 
     public void nextBtnClicked(View view){
-        if(paid){
+        if(isPaid){
 
         }else{
             PaymentRequest payment = new PaymentRequest(new BigDecimal(totalPrice));

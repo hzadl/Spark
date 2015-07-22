@@ -49,9 +49,9 @@ public class DataProviderImpl  {
 
 
 
-	public List<Product> getOrderByOrderNumber(String orderNumber) {
+	public Order getOrderByOrderNumber(String orderNumber) {
 		List<Product> products = new ArrayList<Product>();
-
+		boolean isPaid = true;
 		String url = basePath +"?method=queryOrder&order_number="+orderNumber;
 		try {
 //			result = readStringFromUrl(url);
@@ -73,13 +73,16 @@ public class DataProviderImpl  {
 				a.setPrice(Double.valueOf(price));
 				products.add(a);
 			}
-			
+			if(state==1){
+				isPaid = false;
+			}
+			order = new Order(products,isPaid);
 			System.out.println("ordersize = " + products.size());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return products;
+		return order;
 	}
 
 	public Product getProduct(String productId) {

@@ -14,24 +14,20 @@ import java.util.List;
 import easepay.kfc.com.au.easepaykfc.model.Product;
 
 import easepay.kfc.com.au.easepaykfc.data.DataProviderImpl;
-<<<<<<< Updated upstream
 
-=======
-import easepay.kfc.com.au.easepaykfc.easepay.kfc.com.au.easepaykfc.model.Order;
-import easepay.kfc.com.au.easepaykfc.easepay.kfc.com.au.easepaykfc.model.Product;
->>>>>>> Stashed changes
+import easepay.kfc.com.au.easepaykfc.model.Order;
+import easepay.kfc.com.au.easepaykfc.model.Product;
+
 
 
 public class inputOrderNumberActivity extends ActionBarActivity {
 
-    static List<Product> products = new ArrayList<Product>();
     static Order order = new Order();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input_order_number);
-        products.clear();
         EditText editText = (EditText) findViewById(R.id.order_number);
         editText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,9 +61,11 @@ public class inputOrderNumberActivity extends ActionBarActivity {
 
     public void confirmBtnClicked(View view){
         System.out.println("Done clicked");
-
+        EditText edit = (EditText) findViewById(R.id.order_number);
         DataProviderImpl dataProvider = new DataProviderImpl();
-        products=dataProvider.getOrderByOrderNumber("1000");
+
+        String orderNumber = edit.getText().toString();
+        order=dataProvider.getOrderByOrderNumber(orderNumber);
 
 
         //TODO:send code to server and validate data, send order information back
