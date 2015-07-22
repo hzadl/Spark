@@ -23,13 +23,12 @@
             android:label="@string/title_activity_input_order_number" >
         </activity>
         <activity
-<<<<<<< HEAD
             android:name=".ShowOrderDetailActivity"
             android:label="@string/title_activity_show_order_detail" >
-=======
+        </activity>
+        <activity
             android:name=".ProductActivity"
             android:label="@string/title_activity_product" >
->>>>>>> origin/master
         </activity>
     </application>
 
