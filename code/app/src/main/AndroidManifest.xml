@@ -5,6 +5,7 @@
 
     <uses-permission android:name="com.aevi.permission.CONFIGURATION" />
     <uses-permission android:name="com.aevi.permission.PAYMENT_REQUEST" />
+    <uses-permission android:name="com.aevi.permission.PRINT_SERVICE" />
 
     <meta-data
         android:name="application-type"
