@@ -124,8 +124,8 @@ public class ShowOrderDetailActivity extends ActionBarActivity {
                 //printPayload.append("Emphasized").fontStyle(FontStyle.EMPHASIZED);
                 //printPayload.append("Inverted").fontStyle(FontStyle.INVERTED);
                 printPayload.appendEmptyLine();
-                printPayload.append("*******************").underline(Underline.SINGLE);
-                printPayload.append("Total: Price").fontStyle(FontStyle.INVERTED_EMPHASIZED);
+                printPayload.append("*******************").underline(Underline.SINGLE).align(Alignment.CENTER);;
+                printPayload.append("Total: Price").fontStyle(FontStyle.INVERTED_EMPHASIZED).align(Alignment.CENTER);;
 
                // printPayload.append("Double Underlined").underline(Underline.DOUBLE);
 
@@ -134,7 +134,7 @@ public class ShowOrderDetailActivity extends ActionBarActivity {
 
                 SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
                 Date date = new Date(System.currentTimeMillis());
-                printPayload.append(String.format("The time is %s", dateFormatter.format(date)));
+                printPayload.append(String.format("The time is %s", dateFormatter.format(date))).align(Alignment.CENTER);
                 Bitmap preview = this.printService.preview(printPayload, this.printService.getDefaultPrinterSettings());
 
 // print the payload
