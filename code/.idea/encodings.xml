@@ -3,5 +3,6 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/app/libs/aevi-api-2.3.0.jar" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/libs/aevi-smartcardio-api-1.0.jar" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>
