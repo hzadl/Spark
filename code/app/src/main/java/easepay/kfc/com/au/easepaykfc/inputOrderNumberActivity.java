@@ -9,26 +9,23 @@ import android.view.View;
 import android.widget.EditText;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import easepay.kfc.com.au.easepaykfc.model.Product;
+
+import easepay.kfc.com.au.easepaykfc.data.DataProviderImpl;
+
 
 
 public class inputOrderNumberActivity extends ActionBarActivity {
 
-    static ArrayList<Product> products = new ArrayList<Product>();
+    static List<Product> products = new ArrayList<Product>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input_order_number);
-
-        for(int i=0;i<10;i++){
-            Product p = new Product();
-            p.setName("product"+i);
-            p.setPrice((i + 1) * 2);
-            products.add(p);
-        }
-
-
+        products.clear();
         EditText editText = (EditText) findViewById(R.id.order_number);
         editText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +59,11 @@ public class inputOrderNumberActivity extends ActionBarActivity {
 
     public void confirmBtnClicked(View view){
         System.out.println("Done clicked");
+
+        DataProviderImpl dataProvider = new DataProviderImpl();
+        products=dataProvider.getOrderByOrderNumber("1000");
+
+
         //TODO:send code to server and validate data, send order information back
         Intent i = new Intent(this, OrderConfirmationActivity.class);
         startActivity(i);
