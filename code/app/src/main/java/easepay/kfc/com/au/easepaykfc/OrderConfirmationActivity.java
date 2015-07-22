@@ -1,22 +1,18 @@
 package easepay.kfc.com.au.easepaykfc;
 
-import android.os.Parcelable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.aevi.payment.PaymentRequest;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Currency;
 
-import easepay.kfc.com.au.easepaykfc.R;
-import easepay.kfc.com.au.easepaykfc.easepay.kfc.com.au.easepaykfc.model.Product;
+import easepay.kfc.com.au.easepaykfc.model.Product;
 
 public class OrderConfirmationActivity extends ActionBarActivity {
 

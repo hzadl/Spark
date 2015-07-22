@@ -7,8 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import easepay.kfc.com.au.easepaykfc.easepay.kfc.com.au.easepaykfc.model.Product;
-
 
 public class MainActivity extends ActionBarActivity {
 

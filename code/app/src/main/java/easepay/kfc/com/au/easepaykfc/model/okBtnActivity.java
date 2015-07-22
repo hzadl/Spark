@@ -1,4 +1,4 @@
-package easepay.kfc.com.au.easepaykfc.easepay.kfc.com.au.easepaykfc.model;
+package easepay.kfc.com.au.easepaykfc.model;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;

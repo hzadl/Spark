@@ -1,9 +1,7 @@
 package easepay.kfc.com.au.easepaykfc;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,18 +13,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.List;
 
-import easepay.kfc.com.au.easepaykfc.easepay.kfc.com.au.easepaykfc.model.Product;
+import easepay.kfc.com.au.easepaykfc.model.ApiException;
+import easepay.kfc.com.au.easepaykfc.model.Product;
 
 
+@SuppressWarnings("deprecation")
 public class ProductActivity extends ActionBarActivity {
 
     Product[] products;
@@ -39,13 +35,19 @@ public class ProductActivity extends ActionBarActivity {
         setContentView(R.layout.activity_product);
 
         //load data and images from data base
-        products = Product.getTestProducts();
-
-        //get view handles
-        lvProducts = (ListView)findViewById(R.id.lvProducts);
-        ProductAdapter adapter = new ProductAdapter(this,products);
-        lvProducts.setAdapter(adapter);
+        //products = Product.getTestProducts();
+        try {
+            //products = Product.getProducts();
+            products = Product.getTestProducts();
+            //get view handles
+            lvProducts = (ListView)findViewById(R.id.lvProducts);
+            ProductAdapter adapter = new ProductAdapter(this,products);
+            lvProducts.setAdapter(adapter);
+        } catch (ApiException e) {
+            Toast.makeText(this,"Error:" + e.getMessage(),Toast.LENGTH_LONG).show();
+        }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -82,6 +84,7 @@ public class ProductActivity extends ActionBarActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            @SuppressLint("ViewHolder")
             View rowView = inflater.inflate(R.layout.product_row_layout, parent, false);
             Product product = products[position];
 
@@ -89,19 +92,6 @@ public class ProductActivity extends ActionBarActivity {
             textView.setText(product.getName());
             ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
             UrlImageViewHelper.setUrlDrawable(imageView, product.getPicture());
-//            imageView.setImageResource(R.drawable.kfc_test_product_1);
-//            try {
-//                URL url = new URL(product.getPicture());
-//                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-//                imageView.setImageBitmap(bmp);
-//            } catch (MalformedURLException e) {
-//                e.printStackTrace();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-
-            //imageView.setImageDrawable(drawable);
-            //UrlImageViewHelper.setUrlDrawable(imageView, product.getPicture());
             return rowView;
         }
     }

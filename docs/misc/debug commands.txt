@@ -1,0 +1,6 @@
+adb connect 10.201.40.96
+
+adb kill-server
+
+adb devices
+

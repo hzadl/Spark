@@ -1,10 +1,19 @@
-package easepay.kfc.com.au.easepaykfc.easepay.kfc.com.au.easepaykfc.model;
+package easepay.kfc.com.au.easepaykfc.model;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+
+import easepay.kfc.com.au.easepaykfc.util.ModelUtil;
 
 
 public class Product extends Item {
@@ -77,13 +86,42 @@ public class Product extends Item {
     }
 
     @SuppressWarnings("deprecation")
-    public static Product[] getProducts(){
+    public static Product[] getProducts() throws ApiException {
+        String jsonUrl = "http://10.201.38.138/public/rest?method=queryProduct";
         ArrayList<Product> products = new ArrayList<Product>();
 
-        HttpClient httpClient = new DefaultHttpClient();
+        HttpClient client = new DefaultHttpClient();
+        HttpGet request = new HttpGet(jsonUrl);
+        HttpResponse response;
+        String str = null;
+
+        try {
+            response = client.execute(request);
+            HttpEntity entity = response.getEntity();
+            if (entity != null){
+                InputStream instream = entity.getContent();
+                str = ModelUtil.convertStreamToString(instream);
+                JSONArray jsonArray = new JSONArray(str);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    Product product = new Product();
+                    products.add(product);
+                    product.setId(jsonObject.getLong("id"));
+                    product.setName(jsonObject.getString("name"));
+                    product.setDescription(jsonObject.getString("description"));
+                    product.setPrice(jsonObject.getDouble("price"));
+                    product.setPicture(jsonObject.getString("picture"));
+                }
+            }
+        } catch (IOException e) {
+            throw new ApiException("Fail to get json string");
+        } catch (JSONException e) {
+            throw new ApiException("Fail to parse json string");
+        }
 
         Product[] productArray = new Product[products.size()];
         productArray = products.toArray(productArray);
         return productArray;
     }
+
 }

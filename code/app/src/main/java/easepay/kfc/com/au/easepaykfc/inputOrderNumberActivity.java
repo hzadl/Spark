@@ -1,20 +1,16 @@
 package easepay.kfc.com.au.easepaykfc;
 
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import easepay.kfc.com.au.easepaykfc.easepay.kfc.com.au.easepaykfc.model.Product;
+import easepay.kfc.com.au.easepaykfc.model.Product;
 
 
 public class inputOrderNumberActivity extends ActionBarActivity {

@@ -1,4 +1,4 @@
-package easepay.kfc.com.au.easepaykfc.easepay.kfc.com.au.easepaykfc.model;
+package easepay.kfc.com.au.easepaykfc.model;
 
 /** @pdOid 4c11853e-b73b-44f4-83ed-aaa91e644431 */
 public class Item {
