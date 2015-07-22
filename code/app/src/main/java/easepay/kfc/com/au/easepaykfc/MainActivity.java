@@ -45,9 +45,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void newBtnClicked(View view){
-        System.out.println("new clicked");
-//        Intent i = new Intent(getApplicationContext(), OrderInfoActivity.class);
-//        startActivity(i);
+        finish();
     }
 
 }

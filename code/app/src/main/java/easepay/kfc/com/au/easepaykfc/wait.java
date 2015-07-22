@@ -4,6 +4,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 
 public class wait extends ActionBarActivity {
@@ -34,5 +35,11 @@ public class wait extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void okBtnClicked(View view){
+        System.out.println("ok clicked");
+//        Intent i = new Intent(getApplicationContext(), OrderInfoActivity.class);
+//        startActivity(i);
     }
 }
