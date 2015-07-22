@@ -1,12 +1,8 @@
 package easepay.kfc.com.au.easepaykfc;
 
 import android.content.Intent;
-<<<<<<< Updated upstream
-=======
-import android.os.StrictMode;
-import android.support.v7.app.ActionBarActivity;
->>>>>>> Stashed changes
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
