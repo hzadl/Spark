@@ -43,7 +43,11 @@
         <activity
             android:name=".wait"
             android:label="@string/title_activity_wait" >
-        </activity>        
+        </activity>
+        <activity
+            android:name=".OrderConfirmationActivity"
+            android:label="@string/title_activity_order_confirmation" >
+        </activity>
     </application>
 
     <meta-data android:name="application-type" android:value="vaa_merchant"/>

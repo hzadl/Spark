@@ -2,6 +2,7 @@ package easepay.kfc.com.au.easepaykfc.data;
 
 import android.app.Activity;
 import android.os.Message;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,14 +15,21 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.auth.AuthenticationException;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -34,7 +42,7 @@ import easepay.kfc.com.au.easepaykfc.easepay.kfc.com.au.easepaykfc.model.Product
 
 public class DataProviderImpl  {
 
-	private static final String basePath = "http://10.201.38.138/public/rest?method=queryProduct&order_number=1000";
+	private static final String basePath = "http://10.201.38.138/public/rest?method=queryOrder&order_number=1000";
 
 
 
@@ -45,21 +53,24 @@ public class DataProviderImpl  {
 		try {
 //			result = readStringFromUrl(url);
 			// System.out.println("result"+result);
-			JsonObject input = readJsonFromUrl(url);
-			JsonArray entries = input.get("products").getAsJsonArray();
+
+
+//			JSONObject input = new JSONObject("{'id':2,'order_number':'1000','state':3,'store_id':1,'order_time':1437550174,'payment_time':1437553951,'deliver_time':1437554113,'product_id':'1,3','price':20,'user_id':1,'products':[{'id':1,'name':'Beef burger','description':'yummy beef burger','price':10.5,'picture':'https:\\/\\/encrypted-tbn0.gstatic.com\\/images?q=tbn:ANd9GcQNuHABYLdlRKBVjAbUcepRALRyIpwtD0c-4e_xzzRouQofqYGvgQ'},{'id':3,'name':'chicken burger','description':'disgusting chicken burger','price':4.99,'picture':'http:\\/\\/img4.wikia.nocookie.net\\/__cb20131222143935\\/glee\\/images\\/6\\/6d\\/Chicken_Burger.jpg'}]}");
+//			System.out.println(input.toString());
+			JSONObject input = readJsonFromUrl(url);
+
+			JSONArray entries = input.getJSONArray("products");
 //			JsonArray entries = (JsonArray) new JsonParser().parse(result);
-			for (int i = 0; i < entries.size(); i++) {
-				String name = entries.get(i).getAsJsonObject().get("name")
-						.getAsString();
-				String price = entries.get(i).getAsJsonObject()
-						.get("price").getAsString();
+			for (int i = 0; i < entries.length(); i++) {
+				String name = entries.getJSONObject(i).getString("name");
+				String price = entries.getJSONObject(i).getString("price");
 				Product a = new Product();
 				a.setName(name);
 				a.setPrice(Double.valueOf(price));
 				order.add(a);
 			}
 			System.out.println("ordersize = "+order.size());
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -67,16 +78,21 @@ public class DataProviderImpl  {
 	}
 
 	public Product getProduct(String productId) {
-		JsonObject input = null;
+		JSONObject input = null;
 		String path = basePath;
 		try {
 			input = readJsonFromUrl(path);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		String name = input.get("name").getAsString();
-		String description = input.get("description").getAsString();
-		String price = input.get("price").getAsString();
+		try {
+			String name = input.getString("name");
+			String description = input.getString("description");
+			String price = input.getString("price");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
 
 		Product product = new Product();
 		return product;
@@ -113,18 +129,50 @@ public class DataProviderImpl  {
 	}
 
 	/* JSON utility method */
-	private static JsonObject readJsonFromUrl(String url) throws IOException {
-		InputStream is = new URL(url).openStream();
+	private static JSONObject readJsonFromUrl(String url) throws IOException {
+		InputStream inputStream = null;
+		String result = "";
 		try {
-			BufferedReader rd = new BufferedReader(new InputStreamReader(is,
-					Charset.forName("UTF-8")));
-			String jsonText = readAll(rd);
-			JsonElement jelement = new JsonParser().parse(jsonText);
-			JsonObject jobject = jelement.getAsJsonObject();
-			return jobject;
-		} finally {
-			is.close();
+
+			// create HttpClient
+			HttpClient httpclient = new DefaultHttpClient();
+
+			// make GET request to the given URL
+			HttpResponse httpResponse = httpclient.execute(new HttpGet(url));
+
+			// receive response as inputStream
+			inputStream = httpResponse.getEntity().getContent();
+
+			// convert inputstream to string
+			if(inputStream != null)
+				result = convertInputStreamToString(inputStream);
+			else
+				result = "Did not work!";
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+
+		System.out.println("result="+result);
+		JSONObject json = null;
+		try {
+			json = new JSONObject(result);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return json;
+	}
+
+	private static String convertInputStreamToString(InputStream inputStream) throws IOException{
+		BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+		String line = "";
+		String result = "";
+		while((line = bufferedReader.readLine()) != null)
+			result += line;
+
+		inputStream.close();
+		return result;
+
 	}
 
 
