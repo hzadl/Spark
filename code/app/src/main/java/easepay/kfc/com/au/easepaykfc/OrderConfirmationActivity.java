@@ -69,9 +69,10 @@ public class OrderConfirmationActivity extends ActionBarActivity {
 
     public void nextBtnClicked(View view){
         if(isPaid){
-
+            //TODO:print receipt
         }else{
-            PaymentRequest payment = new PaymentRequest(new BigDecimal(totalPrice));
+
+            PaymentRequest payment = new PaymentRequest(new BigDecimal(""+totalPrice));
             payment.setCurrency(Currency.getInstance("AUD"));
 
             // Launch the Payment app.
