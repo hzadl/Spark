@@ -1,5 +1,6 @@
 package easepay.kfc.com.au.easepaykfc.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,9 +26,16 @@ public class Order {
     }
 
     boolean isPaid;
+
+    public Order(){
+        products = new ArrayList<Product>();
+        isPaid = false;
+    }
+
     public Order(List<Product> products,boolean isPaid){
         this.products = products;
         this.isPaid = isPaid;
     }
+
 
 }

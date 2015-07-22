@@ -14,12 +14,18 @@ import java.util.List;
 import easepay.kfc.com.au.easepaykfc.model.Product;
 
 import easepay.kfc.com.au.easepaykfc.data.DataProviderImpl;
+<<<<<<< Updated upstream
 
+=======
+import easepay.kfc.com.au.easepaykfc.easepay.kfc.com.au.easepaykfc.model.Order;
+import easepay.kfc.com.au.easepaykfc.easepay.kfc.com.au.easepaykfc.model.Product;
+>>>>>>> Stashed changes
 
 
 public class inputOrderNumberActivity extends ActionBarActivity {
 
     static List<Product> products = new ArrayList<Product>();
+    static Order order = new Order();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
