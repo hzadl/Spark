@@ -16,6 +16,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 
 
@@ -23,7 +26,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import easepay.kfc.com.au.easepaykfc.model.ApiException;
+import easepay.kfc.com.au.easepaykfc.model.Params;
 import easepay.kfc.com.au.easepaykfc.model.Product;
+import easepay.kfc.com.au.easepaykfc.util.ModelUtil;
 
 
 @SuppressWarnings("deprecation")
@@ -32,6 +37,8 @@ public class ProductActivity extends ActionBarActivity {
     Product[] products;
 
     ListView lvProducts;
+
+    private double totalPrice = 0.00d;
 
     private Set<Long> selectedProductIds = new HashSet<Long>();
 
@@ -42,6 +49,7 @@ public class ProductActivity extends ActionBarActivity {
                 totalPrice += products[i].getPrice();
             }
         }
+        this.totalPrice = totalPrice;
         setTitle("Total: $" + String.valueOf(totalPrice));
     }
     @Override
@@ -81,9 +89,42 @@ public class ProductActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_order) {
             Toast.makeText(this,"order put",Toast.LENGTH_LONG).show();
+            placeOrder();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void placeOrder() {
+        //get price
+        //get product_ids
+        //
+        if (selectedProductIds.size() == 0){
+            Toast.makeText(this,"Please choose products you need",Toast.LENGTH_LONG).show();
+        }else{
+            String methodName = "createOrder";
+            Params params = new Params();
+            params.addParam("price", totalPrice);
+            params.addParam("product_id", ModelUtil.convertToString(selectedProductIds));
+            String paramStr = params.toString();
+            try {
+                String jsonResult = ModelUtil.executeJson(methodName, paramStr);
+                JSONObject jsonObject = new JSONObject(jsonResult);
+                String state = jsonObject.getString("state");
+                if (state.equals("successed")){
+                    String orderNo = jsonObject.getString("order_number");
+                    showMessage("order successfully, order no: " + orderNo);
+                }else{
+                    throw new ApiException("Fail to place order in database");
+                }
+            }catch (Exception e){
+                Toast.makeText(this,"Error: " + e.toString(),Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    private void showMessage(String msg) {
+        Toast.makeText(this,msg,Toast.LENGTH_LONG);
     }
 
     private class ProductAdapter extends ArrayAdapter<Product>{
