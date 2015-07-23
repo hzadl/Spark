@@ -107,43 +107,52 @@ public class ShowOrderDetailActivity extends ActionBarActivity {
 
                         // service connected, have fun
                         printService = service;
+                        if(null!=printService)
+                        {
+                            printReceipt();
+                        }
                     }
                 });
                 // construct the printer payload
-                PrintPayload printPayload = new PrintPayload();
 
-// first line, hello world
-                //printPayload.append("Hello world!").align(Alignment.Center);
-
-// second line, the current date
-                printPayload.append("KFC Adelaide").align(Alignment.CENTER);
-
-
-                printPayload.append("Order detail: price").align(Alignment.CENTER);
-                //printPayload.append("Emphasized").fontStyle(FontStyle.EMPHASIZED);
-                //printPayload.append("Inverted").fontStyle(FontStyle.INVERTED);
-                printPayload.appendEmptyLine();
-                printPayload.append("*******************").underline(Underline.SINGLE).align(Alignment.CENTER);;
-                printPayload.append("Total: Price").fontStyle(FontStyle.INVERTED_EMPHASIZED).align(Alignment.CENTER);;
-
-               // printPayload.append("Double Underlined").underline(Underline.DOUBLE);
-
-// send the request to the print service
-
-
-                SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
-                Date date = new Date(System.currentTimeMillis());
-                printPayload.append(String.format("The time is %s", dateFormatter.format(date))).align(Alignment.CENTER);
-                //Bitmap preview = this.printService.preview(printPayload, this.printService.getDefaultPrinterSettings());
-
-// print the payload
-                printService.print(printPayload);
 
             }
             else{
                 //unsuccessful, come back to showOrderDetailView
             }
         }
+    }
+
+    void printReceipt()
+    {
+        PrintPayload printPayload = new PrintPayload();
+
+// first line, hello world
+        //printPayload.append("Hello world!").align(Alignment.Center);
+
+// second line, the current date
+        printPayload.append("KFC Adelaide").align(Alignment.CENTER);
+
+
+        printPayload.append("Order detail: price").align(Alignment.CENTER);
+        //printPayload.append("Emphasized").fontStyle(FontStyle.EMPHASIZED);
+        //printPayload.append("Inverted").fontStyle(FontStyle.INVERTED);
+        printPayload.appendEmptyLine();
+        printPayload.append("*******************").underline(Underline.SINGLE).align(Alignment.CENTER);;
+        printPayload.append("Total: Price").fontStyle(FontStyle.INVERTED_EMPHASIZED).align(Alignment.CENTER);;
+
+        // printPayload.append("Double Underlined").underline(Underline.DOUBLE);
+
+// send the request to the print service
+
+
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
+        Date date = new Date(System.currentTimeMillis());
+        printPayload.append(String.format("The time is %s", dateFormatter.format(date))).align(Alignment.CENTER);
+        //Bitmap preview = this.printService.preview(printPayload, this.printService.getDefaultPrinterSettings());
+
+// print the payload
+        printService.print(printPayload);
     }
 
 
