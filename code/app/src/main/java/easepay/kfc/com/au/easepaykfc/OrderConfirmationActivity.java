@@ -234,7 +234,9 @@ public class OrderConfirmationActivity extends ActionBarActivity {
         payload.appendEmptyLine();
         payload.append("    Total       $"+totalPrice).align(Alignment.CENTER).fontStyle(FontStyle.INVERTED_EMPHASIZED);
         payload.append("Congratulations! You are rewarded with a barcode coupon! ").align(Alignment.CENTER);
+        Bitmap barcode = BitmapFactory.decodeResource(getResources(), R.drawable.staticbarcode, bitmapFactoryOptions);
         payload.appendEmptyLine();
+        payload.append(barcode).align(Alignment.CENTER);
         payload.appendEmptyLine();
         SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
         Date date = new Date(System.currentTimeMillis());
