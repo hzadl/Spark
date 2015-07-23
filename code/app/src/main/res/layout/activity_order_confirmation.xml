@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Order # "
-        android:id="@+id/textView3"
+        android:id="@+id/tvOrderNumber"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:text="New Text"
         android:id="@+id/product_list"
-        android:layout_below="@+id/textView3"
+        android:layout_below="@+id/tvOrderNumber"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="121dp" />
 
@@ -31,8 +31,8 @@
         android:id="@+id/pricelabel"
         android:layout_marginTop="173dp"
         android:layout_below="@+id/product_list"
-        android:layout_toLeftOf="@+id/textView3"
-        android:layout_toStartOf="@+id/textView3" />
+        android:layout_toLeftOf="@+id/tvOrderNumber"
+        android:layout_toStartOf="@+id/tvOrderNumber" />
 
     <TextView
         android:layout_width="wrap_content"

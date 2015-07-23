@@ -69,6 +69,8 @@ public class OrderConfirmationActivity extends ActionBarActivity {
             Toast.makeText(this,"The order " + orderNumber + " does not exist",Toast.LENGTH_LONG).show();
             finish();
         }
+        TextView tvOrderNumber = (TextView)findViewById(R.id.tvOrderNumber);
+        tvOrderNumber.setText("Order # " + orderNumber);
         products = order.getProducts();
         isPaid = order.isPaid();
         for(Product p:products){
