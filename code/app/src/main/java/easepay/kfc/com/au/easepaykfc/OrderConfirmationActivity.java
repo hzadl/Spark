@@ -47,6 +47,7 @@ public class OrderConfirmationActivity extends ActionBarActivity {
     List<Product> products;
     String orderNumber;
     private Order order;
+    DataProviderImpl dataProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +63,7 @@ public class OrderConfirmationActivity extends ActionBarActivity {
          content = "";
 
         //query products
-        DataProviderImpl dataProvider = new DataProviderImpl();
+        dataProvider = new DataProviderImpl();
         order=dataProvider.getOrderByOrderNumber(orderNumber);
 
         if(order==null){
@@ -156,6 +157,7 @@ public class OrderConfirmationActivity extends ActionBarActivity {
                next.setText("OK");
                 thankMessage.setVisibility(View.VISIBLE);
                 isPaid=true;
+                dataProvider.payOrderByOrderNumber(orderNumber);
 
 
 
