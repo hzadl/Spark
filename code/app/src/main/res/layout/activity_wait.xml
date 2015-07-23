@@ -39,5 +39,7 @@
         android:layout_gravity="center_horizontal"
         android:textSize="80px"
         android:onClick="okBtnClicked"
+        style="@style/aevi_button"
         />
+    
 </LinearLayout>
