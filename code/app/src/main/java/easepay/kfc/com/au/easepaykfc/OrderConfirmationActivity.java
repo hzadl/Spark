@@ -226,7 +226,7 @@ public class OrderConfirmationActivity extends ActionBarActivity {
         // graphic lines
         BitmapFactory.Options bitmapFactoryOptions = printerSettings.asBitmapFactoryOptions();
 
-        Bitmap logo = BitmapFactory.decodeResource(getResources(), R.drawable.kfc_logo, bitmapFactoryOptions);
+        Bitmap logo = BitmapFactory.decodeResource(getResources(), R.drawable.kfc_logo_b, bitmapFactoryOptions);
         payload.appendEmptyLine();
         payload.append(logo).align(Alignment.CENTER);
         // blank line
@@ -245,8 +245,8 @@ public class OrderConfirmationActivity extends ActionBarActivity {
 //        payload.append("2   Beer        $6.00 ").align(Alignment.CENTER);
         payload.appendEmptyLine();
         payload.append("    Total       $"+totalPrice).align(Alignment.CENTER).fontStyle(FontStyle.INVERTED_EMPHASIZED);
-        payload.append("Congratulations! You earn a voucher! ").align(Alignment.CENTER);
-        Bitmap barcode = BitmapFactory.decodeResource(getResources(), R.drawable.voucherblack, bitmapFactoryOptions);
+        payload.append("Congratulations! \nYou earn a voucher! ").align(Alignment.CENTER);
+        Bitmap barcode = BitmapFactory.decodeResource(getResources(), R.drawable.kfc, bitmapFactoryOptions);
         payload.appendEmptyLine();
         payload.append(barcode).align(Alignment.CENTER);
         payload.appendEmptyLine();
