@@ -42,6 +42,8 @@ public class ProductActivity extends ActionBarActivity {
 
     private double totalPrice = 0.00d;
 
+    private String customerNo = null;
+
     private Set<Long> selectedProductIds = new HashSet<Long>();
 
     private void updateTotalPrice(){
@@ -84,7 +86,6 @@ public class ProductActivity extends ActionBarActivity {
 
     public void OrderButtonClick(View view)
     {
-        Toast.makeText(this,"order put",Toast.LENGTH_LONG).show();
         placeOrder();
     }
 
@@ -103,6 +104,10 @@ public class ProductActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void onMemberScan(View v){
+        startActivityForResult(new Intent(this, SimpleScannerActivity.class), 0);
+    }
+
     private void placeOrder() {
         //get price
         //get product_ids
@@ -113,6 +118,12 @@ public class ProductActivity extends ActionBarActivity {
             String methodName = "createOrder";
             Params params = new Params();
             params.addParam("price", totalPrice);
+            if (customerNo != null && customerNo.length() != 0){
+                if (customerNo.length() > 4){
+                    customerNo = customerNo.substring(0,6);
+                }
+                params.addParam("user_id", customerNo);
+            }
             params.addParam("product_id", ModelUtil.convertToString(selectedProductIds));
             String paramStr = params.toString();
             Log.d(TAG,"paramStr = " + paramStr);
@@ -194,5 +205,10 @@ public class ProductActivity extends ActionBarActivity {
             return rowView;
         }
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        customerNo = intent.getStringExtra(SimpleScannerActivity.SCAN_RESULT);
     }
 }
