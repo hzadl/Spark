@@ -92,4 +92,8 @@ public class ModelUtil {
 
         return null;
     }
+
+    public static String barCodeToOrderNumber(String barcode) {
+        return barcode.substring(1,9);
+    }
 }

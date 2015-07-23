@@ -10,4 +10,6 @@
     <string name="title_activity_product">Product</string>
     <string name="title_activity_wait">wait</string>
     <string name="title_activity_order_confirmation">OrderConfirmationActivity</string>
+    <string name="title_activity_scan_bar_code">ScanBarCodeActivity</string>
+    <string name="title_activity_choose_order_input_method">ChooseOrderInputMethodActivity</string>
 </resources>

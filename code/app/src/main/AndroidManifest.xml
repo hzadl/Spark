@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="easepay.kfc.com.au.easepaykfc" >
 
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -10,9 +11,14 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="com.aevi.permission.CONFIGURATION" />
     <uses-permission android:name="com.aevi.permission.PAYMENT_REQUEST" />
-
     <uses-permission android:name="com.aevi.permission.PRINT_SERVICE" />
 
+    <meta-data
+        android:name="application-type"
+        android:value="vaa_merchant" />
+    <meta-data
+        android:name="ip-addresses"
+        android:value="10.201.38.138/23" />
 
     <application
         android:allowBackup="true"
@@ -48,8 +54,16 @@
             android:name=".OrderConfirmationActivity"
             android:label="@string/title_activity_order_confirmation" >
         </activity>
+        <activity
+            android:name=".ScanBarCodeActivity"
+            android:label="@string/title_activity_scan_bar_code" >
+        </activity>
+        <activity
+            android:name=".ChooseOrderInputMethodActivity"
+            android:label="@string/title_activity_choose_order_input_method" >
+        </activity>
+
+        <activity android:name=".SimpleScannerActivity" />
     </application>
 
-    <meta-data android:name="application-type" android:value="vaa_merchant"/>
-    <meta-data android:name="ip-addresses" android:value="10.201.38.138/23" />
 </manifest>
