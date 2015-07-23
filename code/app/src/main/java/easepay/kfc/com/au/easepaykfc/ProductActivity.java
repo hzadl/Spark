@@ -3,8 +3,8 @@ package easepay.kfc.com.au.easepaykfc;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,11 +18,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 
+import org.json.JSONObject;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -53,7 +51,8 @@ public class ProductActivity extends ActionBarActivity {
                 totalPrice += products[i].getPrice();
             }
         }
-        this.totalPrice = totalPrice;
+        totalPrice = (double)Math.round(totalPrice*100)/100;
+        this.totalPrice=totalPrice;
         setTitle("Total: $" + String.valueOf(totalPrice));
     }
     @Override

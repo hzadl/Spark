@@ -77,7 +77,9 @@ public class OrderConfirmationActivity extends ActionBarActivity {
         for(Product p:products){
             content += p.getName()+" $"+p.getPrice()+"\n";
             totalPrice+=p.getPrice();
+
         }
+        totalPrice=(double)Math.round(totalPrice*100)/100.0;
         list.setText(content);
         price.setText("" + totalPrice);
 
@@ -184,7 +186,7 @@ public class OrderConfirmationActivity extends ActionBarActivity {
         //Bitmap preview = this.printService.preview(printPayload, this.printService.getDefaultPrinterSettings());
 
 // print the payload
-         printService.print(printPayload);
+       //  printService.print(printPayload);
     }
 
 
@@ -220,7 +222,7 @@ public class OrderConfirmationActivity extends ActionBarActivity {
         // blank line
         payload.appendEmptyLine();
         // contact no.
-        payload.append("Order#: "+orderNumber).align(Alignment.CENTER);
+        payload.append("Order#: " + orderNumber).align(Alignment.CENTER);
         // address
         payload.append("Address: KFC RundleMall ");
         // // append a table
