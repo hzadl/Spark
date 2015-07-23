@@ -31,6 +31,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import easepay.kfc.com.au.easepaykfc.data.DataProviderImpl;
+import easepay.kfc.com.au.easepaykfc.model.Order;
 import easepay.kfc.com.au.easepaykfc.model.Product;
 
 public class OrderConfirmationActivity extends ActionBarActivity {
@@ -44,6 +46,8 @@ public class OrderConfirmationActivity extends ActionBarActivity {
     TextView thankMessage;
     List<Product> products;
     String orderNumber;
+    private Order order;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -56,8 +60,17 @@ public class OrderConfirmationActivity extends ActionBarActivity {
         thankMessage=(TextView) findViewById(R.id.textView4);
          next = (Button) findViewById(R.id.next_step);
          content = "";
-         products = inputOrderNumberActivity.order.getProducts();
-        isPaid = inputOrderNumberActivity.order.isPaid();
+
+        //query products
+        DataProviderImpl dataProvider = new DataProviderImpl();
+        order=dataProvider.getOrderByOrderNumber(orderNumber);
+
+        if(order==null){
+            Toast.makeText(this,"The order " + orderNumber + " does not exist",Toast.LENGTH_LONG).show();
+            finish();
+        }
+        products = order.getProducts();
+        isPaid = order.isPaid();
         for(Product p:products){
             content += p.getName()+" $"+p.getPrice()+"\n";
             totalPrice+=p.getPrice();

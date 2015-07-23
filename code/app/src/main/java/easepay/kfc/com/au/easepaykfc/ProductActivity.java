@@ -2,6 +2,7 @@ package easepay.kfc.com.au.easepaykfc;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -119,7 +120,14 @@ public class ProductActivity extends ActionBarActivity {
 
                 if (state.equals("successed")){
                     String orderNo = jsonObject.getString("order_number");
-                    showMessage("order successfully, order no: " + orderNo);
+                    //showMessage("order successfully, order no: " + orderNo);
+                    //goto confirmation user interface
+                    Intent i = new Intent(this, OrderConfirmationActivity.class);
+                    Bundle bundle = new Bundle();
+
+                    bundle.putString("orderNumber", orderNo);
+                    i.putExtras(bundle);
+                    startActivity(i);
                 }else{
                     throw new ApiException("Fail to place order in database");
                 }
