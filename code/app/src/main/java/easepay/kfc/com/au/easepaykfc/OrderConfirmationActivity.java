@@ -244,7 +244,7 @@ public class OrderConfirmationActivity extends ActionBarActivity {
         payload.appendEmptyLine();
         SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
         Date date = new Date(System.currentTimeMillis());
-        payload.append(String.format("The time is %s", dateFormatter.format(date))).align(Alignment.CENTER);
+        payload.append(String.format( dateFormatter.format(date))).align(Alignment.CENTER);
         payload.appendEmptyLine();
         payload.appendEmptyLine();
         return payload;
