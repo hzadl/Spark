@@ -14,6 +14,8 @@ import com.google.zxing.Result;
 import com.google.zxing.client.result.ParsedResult;
 import com.google.zxing.client.result.URIParsedResult;
 
+import easepay.kfc.com.au.easepaykfc.data.DataProviderImpl;
+import easepay.kfc.com.au.easepaykfc.model.Order;
 import easepay.kfc.com.au.easepaykfc.util.ModelUtil;
 
 
@@ -64,17 +66,25 @@ public class ChooseOrderInputMethodActivity extends ActionBarActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 
-            String barcode = intent.getStringExtra(SimpleScannerActivity.SCAN_RESULT);
+        String barcode = intent.getStringExtra(SimpleScannerActivity.SCAN_RESULT);
 
+        String orderNumber = ModelUtil.barCodeToOrderNumber(barcode);
+        DataProviderImpl dataProvider = new DataProviderImpl();
+        Order order=dataProvider.getOrderByOrderNumber(orderNumber);
+        if(order==null){
+            Toast.makeText(this,"The order # " + orderNumber + " does not exist!",Toast.LENGTH_LONG).show();
+        }else{
             Intent i = new Intent(this, OrderConfirmationActivity.class);
             Bundle bundle = new Bundle();
-            String orderNumber = ModelUtil.barCodeToOrderNumber(barcode);
+
             Log.d(TAG,"orderNumber = " + orderNumber);
+
             bundle.putString("orderNumber", orderNumber);
             //bundle.putBoolean("Ismale", true);
 
             i.putExtras(bundle);
             startActivity(i);
+        }
     }
 
     public String getCodeURI(ParsedResult parsedResult) {

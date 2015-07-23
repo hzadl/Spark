@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import easepay.kfc.com.au.easepaykfc.data.DataProviderImpl;
 import easepay.kfc.com.au.easepaykfc.model.Order;
@@ -61,19 +62,19 @@ public class inputOrderNumberActivity extends ActionBarActivity {
         order=dataProvider.getOrderByOrderNumber(orderNumber);
 
         if(order==null){
-            
+            Toast.makeText(this,"The order # " + orderNumber + " does not exist!",Toast.LENGTH_LONG).show();
+        }else{
+            //TODO:send code to server and validate data, send order information back
+            Intent i = new Intent(this, OrderConfirmationActivity.class);
+            Bundle bundle = new Bundle();
+
+            bundle.putString("orderNumber", orderNumber);
+            //bundle.putBoolean("Ismale", true);
+
+
+            i.putExtras(bundle);
+            startActivity(i);
         }
-
-        //TODO:send code to server and validate data, send order information back
-        Intent i = new Intent(this, OrderConfirmationActivity.class);
-        Bundle bundle = new Bundle();
-
-        bundle.putString("orderNumber", orderNumber);
-        //bundle.putBoolean("Ismale", true);
-
-
-        i.putExtras(bundle);
-        startActivity(i);
     }
 
 
