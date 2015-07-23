@@ -1,5 +1,7 @@
 package easepay.kfc.com.au.easepaykfc.util;
 
+import android.util.Log;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -22,6 +24,7 @@ import easepay.kfc.com.au.easepaykfc.model.Product;
  * Created by Yun on 22/07/2015.
  */
 public class ModelUtil {
+    private static final String TAG = "kfc.com.au.util";
 
     private static final String baseUrl = "http://10.201.38.138/public/rest?";
     public static String convertStreamToString(InputStream is) {
@@ -51,7 +54,7 @@ public class ModelUtil {
             return "";
         }else{
             StringBuffer sb = new StringBuffer();
-            Long[] array = (Long[]) values.toArray();
+            Long[] array = values.toArray(new Long[values.size()]);
             for (int i = 0; i < array.length; i++) {
                 Long value = array[i];
                 sb.append(value);
@@ -65,11 +68,12 @@ public class ModelUtil {
 
     public static String executeJson(String methodName, String paramStr) {
         StringBuffer sb = new StringBuffer();
-        sb.append(baseUrl).append(methodName);
+        sb.append(baseUrl).append("method=").append(methodName);
         if (paramStr != null && paramStr.length() != 0){
-            sb.append(methodName).append("&").append(paramStr);
+            sb.append("&").append(paramStr);
         }
         HttpClient client = new DefaultHttpClient();
+        Log.d(TAG,"execute url: " + sb.toString());
         HttpGet request = new HttpGet(sb.toString());
         HttpResponse response;
         String str = null;

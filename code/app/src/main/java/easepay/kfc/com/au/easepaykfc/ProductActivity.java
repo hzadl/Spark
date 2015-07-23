@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,6 +34,8 @@ import easepay.kfc.com.au.easepaykfc.util.ModelUtil;
 
 @SuppressWarnings("deprecation")
 public class ProductActivity extends ActionBarActivity {
+
+    private final String TAG = "kfc.com.au.easepaykfc";
 
     Product[] products;
 
@@ -107,10 +110,13 @@ public class ProductActivity extends ActionBarActivity {
             params.addParam("price", totalPrice);
             params.addParam("product_id", ModelUtil.convertToString(selectedProductIds));
             String paramStr = params.toString();
+            Log.d(TAG,"paramStr = " + paramStr);
             try {
                 String jsonResult = ModelUtil.executeJson(methodName, paramStr);
+                Log.d(TAG,"place order result : " + jsonResult);
                 JSONObject jsonObject = new JSONObject(jsonResult);
                 String state = jsonObject.getString("state");
+
                 if (state.equals("successed")){
                     String orderNo = jsonObject.getString("order_number");
                     showMessage("order successfully, order no: " + orderNo);
