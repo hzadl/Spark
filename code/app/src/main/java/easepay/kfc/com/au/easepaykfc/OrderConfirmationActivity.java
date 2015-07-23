@@ -86,9 +86,11 @@ public class OrderConfirmationActivity extends ActionBarActivity {
         price.setText("" + totalPrice);
 
         if(state.equals("1")){
+            isPaid=false;
             next.setText("Pay Now");
             thankMessage.setVisibility(View.INVISIBLE);
         }else {
+            isPaid=true;
             next.setText("OK");
             thankMessage.setVisibility(View.VISIBLE);
         }
@@ -122,24 +124,26 @@ public class OrderConfirmationActivity extends ActionBarActivity {
             Intent intent=new Intent(this,MainActivity.class);
             startActivity(intent);
             this.finish();
-            serviceProvider.connect(new AeviServiceConnectionCallback<PrintService>() {
-                @Override
-                public void onConnect(PrintService service) {
+            if (!state.equals("3")) {
+                serviceProvider.connect(new AeviServiceConnectionCallback<PrintService>() {
+                    @Override
+                    public void onConnect(PrintService service) {
 
-                    if (service == null) {
-                        // Print service failed to open, please check the ADB log file for details.
+                        if (service == null) {
+                            // Print service failed to open, please check the ADB log file for details.
 
-                        return;
+                            return;
+                        }
+
+                        // service connected, have fun
+                        printService = service;
+                        if (null != printService) {
+                            printReceipt();
+                            dataProvider.finishOrder(orderNumber);
+                        }
                     }
-
-                    // service connected, have fun
-                    printService = service;
-                    if(null!=printService)
-                    {
-                        printReceipt();
-                    }
-                }
-            });
+                });
+            }
         }else{
 
             PaymentRequest payment = new PaymentRequest(new BigDecimal(""+totalPrice));
@@ -162,6 +166,7 @@ public class OrderConfirmationActivity extends ActionBarActivity {
                 thankMessage.setVisibility(View.VISIBLE);
                 isPaid=true;
                 dataProvider.payOrderByOrderNumber(orderNumber);
+
 
 
 
