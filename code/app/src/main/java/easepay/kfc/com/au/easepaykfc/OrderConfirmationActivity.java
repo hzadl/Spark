@@ -75,7 +75,7 @@ public class OrderConfirmationActivity extends ActionBarActivity {
         tvOrderNumber.setText("Order # " + orderNumber);
         products = order.getProducts();
         state = order.getState();
-        System.out.println(state);
+        //System.out.println(state);
 //        isPaid = order.isPaid();
         for(Product p:products){
             content += p.getName()+" $"+p.getPrice()+"\n";
@@ -139,7 +139,7 @@ public class OrderConfirmationActivity extends ActionBarActivity {
                         // service connected, have fun
                         printService = service;
                         if (null != printService) {
-                            System.out.println("printed");
+                            //System.out.println("printed");
                             printReceipt();
                             dataProvider.finishOrder(orderNumber);
                             serviceProvider.close();
@@ -196,7 +196,7 @@ public class OrderConfirmationActivity extends ActionBarActivity {
         //Bitmap preview = this.printService.preview(printPayload, this.printService.getDefaultPrinterSettings());
 
 // print the payload
-       //  printService.print(printPayload);
+         printService.print(printPayload);
     }
 
 
