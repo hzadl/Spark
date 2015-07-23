@@ -27,7 +27,7 @@ import java.util.Date;
 import java.util.Locale;
 
 
-public class ShowOrderDetailActivity extends ActionBarActivity {
+public class ShowOrderDetailActivity extends BaseActivity {
 
     // create a new ServiceProvider instance and pass the Android context
     private PrintServiceProvider serviceProvider = new PrintServiceProvider(this);

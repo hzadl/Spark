@@ -19,7 +19,7 @@ import easepay.kfc.com.au.easepaykfc.model.Order;
 import easepay.kfc.com.au.easepaykfc.util.ModelUtil;
 
 
-public class ChooseOrderInputMethodActivity extends ActionBarActivity {
+public class ChooseOrderInputMethodActivity extends BaseActivity {
     private final static String TAG = "ChooseOrderInputMethod";
 
     @Override

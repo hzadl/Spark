@@ -35,7 +35,7 @@ import easepay.kfc.com.au.easepaykfc.data.DataProviderImpl;
 import easepay.kfc.com.au.easepaykfc.model.Order;
 import easepay.kfc.com.au.easepaykfc.model.Product;
 
-public class OrderConfirmationActivity extends ActionBarActivity {
+public class OrderConfirmationActivity extends BaseActivity {
 
     private PrintServiceProvider serviceProvider = new PrintServiceProvider(this);
     private PrintService printService;

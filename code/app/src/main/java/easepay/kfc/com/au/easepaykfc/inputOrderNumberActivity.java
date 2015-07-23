@@ -1,5 +1,6 @@
 package easepay.kfc.com.au.easepaykfc;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -14,7 +15,7 @@ import easepay.kfc.com.au.easepaykfc.model.Order;
 
 
 
-public class inputOrderNumberActivity extends ActionBarActivity {
+public class inputOrderNumberActivity extends BaseActivity {
 
     static Order order = new Order();
 
@@ -29,6 +30,12 @@ public class inputOrderNumberActivity extends ActionBarActivity {
                 System.out.println("Done clicked");
             }
         });
+
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null){
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override
@@ -46,9 +53,12 @@ public class inputOrderNumberActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == android.R.id.home) {
+            // app icon in action bar clicked; goto parent activity.
+            this.finish();
             return true;
         }
+
 
         return super.onOptionsItemSelected(item);
     }

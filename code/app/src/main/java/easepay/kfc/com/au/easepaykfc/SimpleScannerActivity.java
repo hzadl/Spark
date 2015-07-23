@@ -13,7 +13,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 /**
  * Created by Yun on 23/07/2015.
  */
-public class SimpleScannerActivity extends Activity implements ZXingScannerView.ResultHandler {
+public class SimpleScannerActivity extends BaseActivity implements ZXingScannerView.ResultHandler {
     public static final String SCAN_RESULT = "scanResult";
     public static final String FORMAT = "format";
     private ZXingScannerView mScannerView;

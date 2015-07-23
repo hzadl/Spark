@@ -32,7 +32,7 @@ import easepay.kfc.com.au.easepaykfc.util.ModelUtil;
 
 
 @SuppressWarnings("deprecation")
-public class ProductActivity extends ActionBarActivity {
+public class ProductActivity extends BaseActivity {
 
     private final String TAG = "kfc.com.au.easepaykfc";
 
