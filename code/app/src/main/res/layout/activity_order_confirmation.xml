@@ -45,7 +45,6 @@
         android:id="@+id/price"
         android:layout_alignRight="@+id/product_list"
         android:layout_alignEnd="@+id/product_list"
-        android:layout_alignBottom="@+id/pricelabel"
         android:layout_alignTop="@+id/pricelabel" />
 
     <Button

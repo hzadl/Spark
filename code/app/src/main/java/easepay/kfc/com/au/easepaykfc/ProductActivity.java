@@ -82,6 +82,12 @@ public class ProductActivity extends ActionBarActivity {
         return true;
     }
 
+    public void OrderButtonClick(View view)
+    {
+        Toast.makeText(this,"order put",Toast.LENGTH_LONG).show();
+        placeOrder();
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -90,10 +96,9 @@ public class ProductActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_order) {
-            Toast.makeText(this,"order put",Toast.LENGTH_LONG).show();
-            placeOrder();
-        }
+//        if (id == R.id.action_order) {
+//
+//        }
 
         return super.onOptionsItemSelected(item);
     }
