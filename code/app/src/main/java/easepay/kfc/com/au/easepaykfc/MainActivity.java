@@ -51,7 +51,7 @@ public class MainActivity extends ActionBarActivity {
 
     public void newBtnClicked(View view){
         System.out.println("new clicked");
-        Intent i = new Intent(this, ShowOrderDetailActivity.class);
+        Intent i = new Intent(this, ProductActivity.class);
         startActivity(i);
     }
 

@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -17,6 +18,9 @@ import android.widget.Toast;
 
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 
+
+import java.util.HashSet;
+import java.util.Set;
 
 import easepay.kfc.com.au.easepaykfc.model.ApiException;
 import easepay.kfc.com.au.easepaykfc.model.Product;
@@ -29,6 +33,17 @@ public class ProductActivity extends ActionBarActivity {
 
     ListView lvProducts;
 
+    private Set<Long> selectedProductIds = new HashSet<Long>();
+
+    private void updateTotalPrice(){
+        double totalPrice = 0.00d;
+        for (int i = 0; i < products.length; i++) {
+            if (selectedProductIds.contains(products[i].getId())){
+                totalPrice += products[i].getPrice();
+            }
+        }
+        setTitle("Total: $" + String.valueOf(totalPrice));
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,8 +52,8 @@ public class ProductActivity extends ActionBarActivity {
         //load data and images from data base
         //products = Product.getTestProducts();
         try {
-            //products = Product.getProducts();
-            products = Product.getTestProducts();
+            products = Product.getProducts();
+            //products = Product.getTestProducts();
             //get view handles
             lvProducts = (ListView)findViewById(R.id.lvProducts);
             ProductAdapter adapter = new ProductAdapter(this,products);
@@ -64,8 +79,8 @@ public class ProductActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_order) {
+            Toast.makeText(this,"order put",Toast.LENGTH_LONG).show();
         }
 
         return super.onOptionsItemSelected(item);
@@ -88,11 +103,37 @@ public class ProductActivity extends ActionBarActivity {
             View rowView = inflater.inflate(R.layout.product_row_layout, parent, false);
             Product product = products[position];
 
-            TextView textView = (TextView) rowView.findViewById(R.id.firstLine);
-            textView.setText(product.getName());
+            //checkbox
+            CheckBox checkBox = (CheckBox)rowView.findViewById(R.id.product_checkbox);
+            checkBox.setTag(new Long(product.getId()));
+            checkBox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if ( ((CheckBox)v).isChecked() ){
+                        selectedProductIds.add((Long)v.getTag());
+                    }else{
+                        selectedProductIds.remove((Long)v.getTag());
+                    }
+                    updateTotalPrice();
+                }
+
+
+            });
+
+
             ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
             UrlImageViewHelper.setUrlDrawable(imageView, product.getPicture());
+
+            TextView tvProductName = (TextView) rowView.findViewById(R.id.product_name);
+            tvProductName.setText(product.getName());
+
+            TextView tvPrice = (TextView) rowView.findViewById(R.id.price);
+            tvPrice.setText("$" + product.getPrice());
+
+            TextView tvSecondLine = (TextView)rowView.findViewById(R.id.secondLine);
+            tvSecondLine.setText(product.getDescription());
             return rowView;
         }
+
     }
 }
