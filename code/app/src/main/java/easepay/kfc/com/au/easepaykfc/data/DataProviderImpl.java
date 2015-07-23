@@ -54,17 +54,12 @@ public class DataProviderImpl  {
 		boolean isPaid = true;
 		String url = basePath +"?method=queryOrder&order_number="+orderNumber;
 		try {
-//			result = readStringFromUrl(url);
-			// System.out.println("result"+result);
 
-
-//			JSONObject input = new JSONObject("{'id':2,'order_number':'1000','state':3,'store_id':1,'order_time':1437550174,'payment_time':1437553951,'deliver_time':1437554113,'product_id':'1,3','price':20,'user_id':1,'products':[{'id':1,'name':'Beef burger','description':'yummy beef burger','price':10.5,'picture':'https:\\/\\/encrypted-tbn0.gstatic.com\\/images?q=tbn:ANd9GcQNuHABYLdlRKBVjAbUcepRALRyIpwtD0c-4e_xzzRouQofqYGvgQ'},{'id':3,'name':'chicken burger','description':'disgusting chicken burger','price':4.99,'picture':'http:\\/\\/img4.wikia.nocookie.net\\/__cb20131222143935\\/glee\\/images\\/6\\/6d\\/Chicken_Burger.jpg'}]}");
-//			System.out.println(input.toString());
 			JSONObject input = readJsonFromUrl(url);
 			int state = input.getInt("state");
 			JSONArray entries = input.getJSONArray("products");
 			if(entries==null)return null;
-//			JsonArray entries = (JsonArray) new JsonParser().parse(result);
+
 			for (int i = 0; i < entries.length(); i++) {
 				String name = entries.getJSONObject(i).getString("name");
 				String price = entries.getJSONObject(i).getString("price");

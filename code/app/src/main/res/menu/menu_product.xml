@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="easepay.kfc.com.au.easepaykfc.ProductActivity">
     <item android:id="@+id/action_order"
-        android:title="Order"
+        android:title="Pay"
         android:orderInCategory="100"
         app:showAsAction="always"/>
+
 </menu>

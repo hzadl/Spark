@@ -11,14 +11,16 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Order # "
+        android:textSize="30dp"
         android:id="@+id/tvOrderNumber"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/logo"
+        android:layout_alignLeft="@+id/next_step" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"
+        android:textSize="20dp"
         android:id="@+id/product_list"
         android:layout_below="@+id/tvOrderNumber"
         android:layout_centerHorizontal="true"
@@ -28,6 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Total price:"
+        android:textSize="20dp"
         android:id="@+id/pricelabel"
         android:layout_marginTop="173dp"
         android:layout_below="@+id/product_list"
@@ -38,16 +41,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"
+        android:textSize="20dp"
         android:id="@+id/price"
         android:layout_alignRight="@+id/product_list"
         android:layout_alignEnd="@+id/product_list"
-        android:layout_alignTop="@+id/pricelabel"
-        android:layout_alignBottom="@+id/pricelabel" />
+        android:layout_alignBottom="@+id/pricelabel"
+        android:layout_alignTop="@+id/pricelabel" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="OK"
+        android:layout_width="200px"
+        android:layout_height="100px"
+        android:background="#211805"
+        android:text="Return to main memu"
+        android:textSize="20dp"
+        android:textColor="#FFFF"
         android:id="@+id/next_step"
         android:layout_marginTop="190dp"
         android:onClick="nextBtnClicked"
@@ -57,9 +64,22 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Thank you for your purchase. Please wait \nand collect per your order #"
+        android:text="Thank you for your purchase. \nYour order number will be called when your food is ready."
+        android:textSize="20dp"
         android:id="@+id/textView4"
         android:layout_marginTop="80dp"
         android:layout_below="@+id/pricelabel"
         android:layout_alignLeft="@+id/pricelabel" />
+
+    <Button
+        android:layout_width="256px"
+        android:layout_height="97px"
+
+        android:id="@+id/logo"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:background="@drawable/kfc_logo"
+
+        />
 </RelativeLayout>
