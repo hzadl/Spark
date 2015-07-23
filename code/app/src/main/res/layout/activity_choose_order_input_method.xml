@@ -34,7 +34,7 @@
     <Button
         android:layout_width="500px"
         android:layout_height="200px"
-        android:text="New Order"
+        android:text="INPUT ORDER#"
         android:id="@+id/btnTypeOrderNo"
         android:onClick="onTypeOrderNo"
         android:background="#211805"
