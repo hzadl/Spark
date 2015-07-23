@@ -63,7 +63,7 @@ public class DataProviderImpl  {
 			JSONObject input = readJsonFromUrl(url);
 			int state = input.getInt("state");
 			JSONArray entries = input.getJSONArray("products");
-
+			if(entries==null)return null;
 //			JsonArray entries = (JsonArray) new JsonParser().parse(result);
 			for (int i = 0; i < entries.length(); i++) {
 				String name = entries.getJSONObject(i).getString("name");

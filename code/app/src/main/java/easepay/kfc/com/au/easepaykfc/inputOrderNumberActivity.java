@@ -66,7 +66,9 @@ public class inputOrderNumberActivity extends ActionBarActivity {
 
         String orderNumber = edit.getText().toString();
         order=dataProvider.getOrderByOrderNumber(orderNumber);
-
+        if(order==null){
+            
+        }
 
         //TODO:send code to server and validate data, send order information back
         Intent i = new Intent(this, OrderConfirmationActivity.class);
