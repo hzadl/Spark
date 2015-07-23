@@ -40,16 +40,20 @@ public class SimpleScannerActivity extends BaseActivity implements ZXingScannerV
 
     @Override
     public void handleResult(Result rawResult) {
-        // Do something with the result here
-        Log.v("", rawResult.getText()); // Prints scan results
-        Log.v("", rawResult.getBarcodeFormat().toString()); // Prints the scan format (qrcode, pdf417 etc.)
+        if (rawResult == null){
+            setResult(Activity.RESULT_CANCELED);
+        }else{
+            // Do something with the result here
+            Log.v("", rawResult.getText()); // Prints scan results
+            Log.v("", rawResult.getBarcodeFormat().toString()); // Prints the scan format (qrcode, pdf417 etc.)
 //        Toast.makeText(this, "BarcodeFormat: " + rawResult.getBarcodeFormat().toString(), Toast.LENGTH_LONG).show();
 //        Toast.makeText(this, "Text: " + rawResult.getText().toString(), Toast.LENGTH_LONG).show();
-        Intent resultIntent = new Intent();
-        resultIntent.putExtra(SCAN_RESULT,rawResult.getText());
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra(SCAN_RESULT,rawResult.getText());
 
-        resultIntent.putExtra(FORMAT,rawResult.getBarcodeFormat().toString());
-        setResult(Activity.RESULT_OK,resultIntent);
+            resultIntent.putExtra(FORMAT,rawResult.getBarcodeFormat().toString());
+            setResult(Activity.RESULT_OK,resultIntent);
+        }
         finish();
     }
 }

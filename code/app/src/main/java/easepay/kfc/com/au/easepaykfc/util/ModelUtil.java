@@ -94,6 +94,10 @@ public class ModelUtil {
     }
 
     public static String barCodeToOrderNumber(String barcode) {
-        return barcode.substring(1,9);
+        if (barcode.length() == 10){
+            return barcode.substring(1,9);
+        }else{
+            return barcode;
+        }
     }
 }

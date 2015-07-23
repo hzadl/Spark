@@ -1,10 +1,10 @@
 package easepay.kfc.com.au.easepaykfc;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -209,6 +209,8 @@ public class ProductActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        customerNo = intent.getStringExtra(SimpleScannerActivity.SCAN_RESULT);
+        if (resultCode == Activity.RESULT_OK){
+            customerNo = intent.getStringExtra(SimpleScannerActivity.SCAN_RESULT);
+        }
     }
 }

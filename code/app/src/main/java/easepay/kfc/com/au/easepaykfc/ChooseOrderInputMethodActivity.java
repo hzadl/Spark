@@ -2,7 +2,6 @@ package easepay.kfc.com.au.easepaykfc;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -10,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.zxing.Result;
 import com.google.zxing.client.result.ParsedResult;
 import com.google.zxing.client.result.URIParsedResult;
 
@@ -65,26 +63,28 @@ public class ChooseOrderInputMethodActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if (resultCode == Activity.RESULT_OK){
+            String barcode = intent.getStringExtra(SimpleScannerActivity.SCAN_RESULT);
+            Log.d(TAG,"barcode =" + barcode);
+            String orderNumber = ModelUtil.barCodeToOrderNumber(barcode);
+            DataProviderImpl dataProvider = new DataProviderImpl();
+            Order order=dataProvider.getOrderByOrderNumber(orderNumber);
+            if(order==null){
+                Toast.makeText(this,"The order # " + orderNumber + " does not exist!",Toast.LENGTH_LONG).show();
+            }else{
+                Intent i = new Intent(this, OrderConfirmationActivity.class);
+                Bundle bundle = new Bundle();
 
-        String barcode = intent.getStringExtra(SimpleScannerActivity.SCAN_RESULT);
+                Log.d(TAG,"orderNumber = " + orderNumber);
 
-        String orderNumber = ModelUtil.barCodeToOrderNumber(barcode);
-        DataProviderImpl dataProvider = new DataProviderImpl();
-        Order order=dataProvider.getOrderByOrderNumber(orderNumber);
-        if(order==null){
-            Toast.makeText(this,"The order # " + orderNumber + " does not exist!",Toast.LENGTH_LONG).show();
-        }else{
-            Intent i = new Intent(this, OrderConfirmationActivity.class);
-            Bundle bundle = new Bundle();
+                bundle.putString("orderNumber", orderNumber);
+                //bundle.putBoolean("Ismale", true);
 
-            Log.d(TAG,"orderNumber = " + orderNumber);
-
-            bundle.putString("orderNumber", orderNumber);
-            //bundle.putBoolean("Ismale", true);
-
-            i.putExtras(bundle);
-            startActivity(i);
+                i.putExtras(bundle);
+                startActivity(i);
+            }
         }
+
     }
 
     public String getCodeURI(ParsedResult parsedResult) {
