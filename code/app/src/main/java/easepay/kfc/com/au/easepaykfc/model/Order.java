@@ -8,6 +8,15 @@ import java.util.List;
  */
 public class Order {
     List<Product> products;
+    String state;
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
 
     public boolean isPaid() {
         return isPaid;
@@ -32,9 +41,9 @@ public class Order {
         isPaid = false;
     }
 
-    public Order(List<Product> products,boolean isPaid){
+    public Order(List<Product> products,String state){
         this.products = products;
-        this.isPaid = isPaid;
+        this.state = state;
     }
 
 

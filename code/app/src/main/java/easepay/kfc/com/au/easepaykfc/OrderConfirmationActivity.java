@@ -41,6 +41,7 @@ public class OrderConfirmationActivity extends ActionBarActivity {
     private PrintService printService;
     String content;
     boolean isPaid = true;
+    String state = "";
     Double totalPrice = 0.0;
     Button next;
     TextView thankMessage;
@@ -73,7 +74,8 @@ public class OrderConfirmationActivity extends ActionBarActivity {
         TextView tvOrderNumber = (TextView)findViewById(R.id.tvOrderNumber);
         tvOrderNumber.setText("Order # " + orderNumber);
         products = order.getProducts();
-        isPaid = order.isPaid();
+        state = order.getState();
+//        isPaid = order.isPaid();
         for(Product p:products){
             content += p.getName()+" $"+p.getPrice()+"\n";
             totalPrice+=p.getPrice();
@@ -83,12 +85,12 @@ public class OrderConfirmationActivity extends ActionBarActivity {
         list.setText(content);
         price.setText("" + totalPrice);
 
-        if(isPaid){
-            next.setText("OK");
-            thankMessage.setVisibility(View.VISIBLE);
-        }else {
+        if(state.equals("1")){
             next.setText("Pay Now");
             thankMessage.setVisibility(View.INVISIBLE);
+        }else {
+            next.setText("OK");
+            thankMessage.setVisibility(View.VISIBLE);
         }
     }
 

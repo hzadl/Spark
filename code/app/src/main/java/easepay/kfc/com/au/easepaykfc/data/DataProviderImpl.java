@@ -56,7 +56,7 @@ public class DataProviderImpl  {
 		try {
 
 			JSONObject input = readJsonFromUrl(url);
-			int state = input.getInt("state");
+			String state = input.getString("state");
 			JSONArray entries = input.getJSONArray("products");
 			if(entries==null)return null;
 
@@ -68,10 +68,7 @@ public class DataProviderImpl  {
 				a.setPrice(Double.valueOf(price));
 				products.add(a);
 			}
-			if(state==1){
-				isPaid = false;
-			}
-			order = new Order(products,isPaid);
+			order = new Order(products,state);
 			System.out.println("ordersize = " + products.size());
 		} catch (Exception e) {
 			e.printStackTrace();

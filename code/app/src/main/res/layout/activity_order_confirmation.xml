@@ -41,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"
-        android:textSize="20dp"
+        android:textSize="30dp"
         android:id="@+id/price"
         android:layout_alignRight="@+id/product_list"
         android:layout_alignEnd="@+id/product_list"
@@ -64,7 +64,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Thank you for your purchase. \nYour order number will be called when your food is ready."
+        android:text="Thank you for your purchase. Your order number will be called when your food is ready."
         android:textSize="20dp"
         android:id="@+id/textView4"
         android:layout_marginTop="80dp"
