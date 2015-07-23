@@ -4,13 +4,14 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="easepay.kfc.com.au.easepaykfc.OrderConfirmationActivity">
+    tools:context="easepay.kfc.com.au.easepaykfc.OrderConfirmationActivity"
+    android:id="@+id/">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Confirmation of order"
+        android:text="Order # "
         android:id="@+id/textView3"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
@@ -47,11 +48,19 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Next"
+        android:text="OK"
         android:id="@+id/next_step"
-        android:layout_marginTop="149dp"
-        android:layout_below="@+id/price"
-        android:layout_centerHorizontal="true"
+        android:layout_marginTop="190dp"
         android:onClick="nextBtnClicked"
-        />
+        android:layout_below="@+id/pricelabel"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Thank you for your purchase. Please wait \nand collect per your order #"
+        android:id="@+id/textView4"
+        android:layout_marginTop="80dp"
+        android:layout_below="@+id/pricelabel"
+        android:layout_alignLeft="@+id/pricelabel" />
 </RelativeLayout>

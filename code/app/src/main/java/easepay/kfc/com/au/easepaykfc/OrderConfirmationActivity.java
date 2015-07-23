@@ -1,25 +1,45 @@
 package easepay.kfc.com.au.easepaykfc;
 
-import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.aevi.helpers.services.AeviServiceConnectionCallback;
 import com.aevi.payment.PaymentRequest;
+import com.aevi.payment.TransactionResult;
+import com.aevi.payment.TransactionStatus;
+import com.aevi.printing.PrintService;
+import com.aevi.printing.PrintServiceProvider;
+import com.aevi.printing.model.Alignment;
+import com.aevi.printing.model.FontStyle;
+import com.aevi.printing.model.PrintPayload;
+import com.aevi.printing.model.Underline;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Currency;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import easepay.kfc.com.au.easepaykfc.model.Product;
 
 public class OrderConfirmationActivity extends ActionBarActivity {
 
+    private PrintServiceProvider serviceProvider = new PrintServiceProvider(this);
+    private PrintService printService;
+
     boolean isPaid = true;
     Double totalPrice = 0.0;
+    Button next;
+    TextView thankMessage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -27,7 +47,8 @@ public class OrderConfirmationActivity extends ActionBarActivity {
         setContentView(R.layout.activity_order_confirmation);
         TextView list = (TextView) findViewById(R.id.product_list);
         TextView price = (TextView) findViewById(R.id.price);
-        Button next = (Button) findViewById(R.id.next_step);
+        thankMessage=(TextView) findViewById(R.id.textView4);
+         next = (Button) findViewById(R.id.next_step);
         String content = "";
         List<Product> products = inputOrderNumberActivity.order.getProducts();
         isPaid = inputOrderNumberActivity.order.isPaid();
@@ -36,12 +57,14 @@ public class OrderConfirmationActivity extends ActionBarActivity {
             totalPrice+=p.getPrice();
         }
         list.setText(content);
-        price.setText(""+totalPrice);
+        price.setText("" + totalPrice);
 
         if(isPaid){
-            next.setText("Print Receipt");
+            next.setText("OK");
+            thankMessage.setVisibility(View.VISIBLE);
         }else {
             next.setText("Pay Now");
+            thankMessage.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -70,6 +93,26 @@ public class OrderConfirmationActivity extends ActionBarActivity {
     public void nextBtnClicked(View view){
         if(isPaid){
             //TODO:print receipt
+            Intent intent=new Intent(this,MainActivity.class);
+            startActivity(intent);
+            serviceProvider.connect(new AeviServiceConnectionCallback<PrintService>() {
+                @Override
+                public void onConnect(PrintService service) {
+
+                    if (service == null) {
+                        // Print service failed to open, please check the ADB log file for details.
+
+                        return;
+                    }
+
+                    // service connected, have fun
+                    printService = service;
+                    if(null!=printService)
+                    {
+                        printReceipt();
+                    }
+                }
+            });
         }else{
 
             PaymentRequest payment = new PaymentRequest(new BigDecimal(""+totalPrice));
@@ -78,5 +121,62 @@ public class OrderConfirmationActivity extends ActionBarActivity {
             // Launch the Payment app.
             startActivityForResult(payment.createIntent(), 0);
         }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode==0) {
+            // Obtain the transaction result from the returned data.
+            TransactionResult result = TransactionResult.fromIntent(data);
+            // Use a toast to show the transaction result.
+            Toast.makeText(this, "Transaction result: " + result.getTransactionStatus(), Toast.LENGTH_LONG).show();
+            if(result.getTransactionStatus()== TransactionStatus.APPROVED) {
+                //pay successful, transfer to wait view and print
+               next.setText("OK");
+                thankMessage.setVisibility(View.VISIBLE);
+                isPaid=true;
+
+
+
+
+                // construct the printer payload
+
+
+            }
+            else{
+                //unsuccessful, come back to currentView
+            }
+        }
+    }
+
+    void printReceipt()
+    {
+        PrintPayload printPayload = new PrintPayload();
+
+// first line, hello world
+        //printPayload.append("Hello world!").align(Alignment.Center);
+
+// second line, the current date
+        printPayload.append("KFC Adelaide").align(Alignment.CENTER);
+
+
+        printPayload.append("Order detail: price").align(Alignment.CENTER);
+        //printPayload.append("Emphasized").fontStyle(FontStyle.EMPHASIZED);
+        //printPayload.append("Inverted").fontStyle(FontStyle.INVERTED);
+        printPayload.appendEmptyLine();
+        printPayload.append("*******************").underline(Underline.SINGLE).align(Alignment.CENTER);;
+        printPayload.append("Total: Price").fontStyle(FontStyle.INVERTED_EMPHASIZED).align(Alignment.CENTER);;
+
+        // printPayload.append("Double Underlined").underline(Underline.DOUBLE);
+
+// send the request to the print service
+
+
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
+        Date date = new Date(System.currentTimeMillis());
+        printPayload.append(String.format("The time is %s", dateFormatter.format(date))).align(Alignment.CENTER);
+        Bitmap preview = this.printService.preview(printPayload, this.printService.getDefaultPrinterSettings());
+
+// print the payload
+        // printService.print(printPayload);
     }
 }

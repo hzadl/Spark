@@ -1,6 +1,7 @@
 package easepay.kfc.com.au.easepaykfc;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -149,10 +150,10 @@ public class ShowOrderDetailActivity extends ActionBarActivity {
         SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
         Date date = new Date(System.currentTimeMillis());
         printPayload.append(String.format("The time is %s", dateFormatter.format(date))).align(Alignment.CENTER);
-        //Bitmap preview = this.printService.preview(printPayload, this.printService.getDefaultPrinterSettings());
+        Bitmap preview = this.printService.preview(printPayload, this.printService.getDefaultPrinterSettings());
 
 // print the payload
-        printService.print(printPayload);
+       // printService.print(printPayload);
     }
 
 
