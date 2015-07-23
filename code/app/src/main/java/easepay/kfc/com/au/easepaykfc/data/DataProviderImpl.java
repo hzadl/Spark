@@ -101,6 +101,19 @@ public class DataProviderImpl  {
 
 	}
 
+	public void finishOrder(String orderNumber) {
+
+		boolean isSuccess = true;
+		String state = "";
+		String url = basePath +"?method=deliverOrder&order_number="+orderNumber;
+		try {
+			JSONObject input = readJsonFromUrl(url);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+
+	}
 
 	public Product getProduct(String productId) {
 		JSONObject input = null;
