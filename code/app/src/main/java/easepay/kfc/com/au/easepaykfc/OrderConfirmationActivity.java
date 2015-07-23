@@ -2,6 +2,7 @@ package easepay.kfc.com.au.easepaykfc;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -17,6 +18,7 @@ import com.aevi.payment.TransactionResult;
 import com.aevi.payment.TransactionStatus;
 import com.aevi.printing.PrintService;
 import com.aevi.printing.PrintServiceProvider;
+import com.aevi.printing.PrinterSettings;
 import com.aevi.printing.model.Alignment;
 import com.aevi.printing.model.FontStyle;
 import com.aevi.printing.model.PrintPayload;
@@ -35,11 +37,12 @@ public class OrderConfirmationActivity extends ActionBarActivity {
 
     private PrintServiceProvider serviceProvider = new PrintServiceProvider(this);
     private PrintService printService;
-
+    String content;
     boolean isPaid = true;
     Double totalPrice = 0.0;
     Button next;
     TextView thankMessage;
+    List<Product> products;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -49,8 +52,8 @@ public class OrderConfirmationActivity extends ActionBarActivity {
         TextView price = (TextView) findViewById(R.id.price);
         thankMessage=(TextView) findViewById(R.id.textView4);
          next = (Button) findViewById(R.id.next_step);
-        String content = "";
-        List<Product> products = inputOrderNumberActivity.order.getProducts();
+         content = "";
+         products = inputOrderNumberActivity.order.getProducts();
         isPaid = inputOrderNumberActivity.order.isPaid();
         for(Product p:products){
             content += p.getName()+" $"+p.getPrice()+"\n";
@@ -95,6 +98,7 @@ public class OrderConfirmationActivity extends ActionBarActivity {
             //TODO:print receipt
             Intent intent=new Intent(this,MainActivity.class);
             startActivity(intent);
+            this.finish();
             serviceProvider.connect(new AeviServiceConnectionCallback<PrintService>() {
                 @Override
                 public void onConnect(PrintService service) {
@@ -138,7 +142,7 @@ public class OrderConfirmationActivity extends ActionBarActivity {
 
 
 
-                // construct the printer payload
+
 
 
             }
@@ -149,34 +153,72 @@ public class OrderConfirmationActivity extends ActionBarActivity {
     }
 
     void printReceipt()
-    {
-        PrintPayload printPayload = new PrintPayload();
+    {// construct the printer payload
+        PrintPayload printPayload = getPayload(printService.getDefaultPrinterSettings());
 
 // first line, hello world
         //printPayload.append("Hello world!").align(Alignment.Center);
 
 // second line, the current date
-        printPayload.append("KFC Adelaide").align(Alignment.CENTER);
+
+        //Bitmap preview = this.printService.preview(printPayload, this.printService.getDefaultPrinterSettings());
+
+// print the payload
+        // printService.print(printPayload);
+    }
 
 
-        printPayload.append("Order detail: price").align(Alignment.CENTER);
-        //printPayload.append("Emphasized").fontStyle(FontStyle.EMPHASIZED);
-        //printPayload.append("Inverted").fontStyle(FontStyle.INVERTED);
-        printPayload.appendEmptyLine();
-        printPayload.append("*******************").underline(Underline.SINGLE).align(Alignment.CENTER);;
-        printPayload.append("Total: Price").fontStyle(FontStyle.INVERTED_EMPHASIZED).align(Alignment.CENTER);;
+
+    private PrintPayload getPayload(PrinterSettings printerSettings) {
+
+        PrintPayload payload = new PrintPayload();
+        // blank line
+//        payload.appendEmptyLine();
+//        payload.append("KFC Adelaide").align(Alignment.CENTER);
+//
+//
+//        payload.append("Order detail: price").align(Alignment.CENTER);
+//        //printPayload.append("Emphasized").fontStyle(FontStyle.EMPHASIZED);
+//        //printPayload.append("Inverted").fontStyle(FontStyle.INVERTED);
+//        payload.appendEmptyLine();
+//        payload.append("*******************").underline(Underline.SINGLE).align(Alignment.CENTER);;
+//      payload.append("Total: Price").fontStyle(FontStyle.INVERTED_EMPHASIZED).align(Alignment.CENTER);;
 
         // printPayload.append("Double Underlined").underline(Underline.DOUBLE);
 
 // send the request to the print service
 
 
+
+        // logo
+        // graphic lines
+        BitmapFactory.Options bitmapFactoryOptions = printerSettings.asBitmapFactoryOptions();
+
+        Bitmap logo = BitmapFactory.decodeResource(getResources(), R.drawable.kfc_logo, bitmapFactoryOptions);
+        payload.appendEmptyLine();
+        payload.append(logo).align(Alignment.CENTER);
+        // blank line
+        payload.appendEmptyLine();
+        // contact no.
+        payload.append("Order#: 1234567890").align(Alignment.CENTER);
+        // address
+        payload.append("Address: KFC RundleMall ");
+        // // append a table
+        payload.append("#   Name        Price ")
+                .underline(Underline.DOUBLE)
+                .align(Alignment.CENTER)
+                .fontStyle(FontStyle.EMPHASIZED);
+
+        payload.append(content).align(Alignment.CENTER);
+//        payload.append("2   Beer        $6.00 ").align(Alignment.CENTER);
+        payload.appendEmptyLine();
+        payload.append("    Total       $"+totalPrice).align(Alignment.CENTER).fontStyle(FontStyle.INVERTED_EMPHASIZED);
+        payload.appendEmptyLine();
         SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
         Date date = new Date(System.currentTimeMillis());
-        printPayload.append(String.format("The time is %s", dateFormatter.format(date))).align(Alignment.CENTER);
-        Bitmap preview = this.printService.preview(printPayload, this.printService.getDefaultPrinterSettings());
-
-// print the payload
-        // printService.print(printPayload);
+        payload.append(String.format("The time is %s", dateFormatter.format(date))).align(Alignment.CENTER);
+        payload.appendEmptyLine();
+        payload.appendEmptyLine();
+        return payload;
     }
 }
