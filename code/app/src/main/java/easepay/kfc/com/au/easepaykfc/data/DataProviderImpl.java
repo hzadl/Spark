@@ -85,6 +85,28 @@ public class DataProviderImpl  {
 		return order;
 	}
 
+	public boolean payOrderByOrderNumber(String orderNumber) {
+
+		boolean isSuccess = true;
+		String state = "";
+		String url = basePath +"?method=payOrder&order_number="+orderNumber;
+		try {
+			JSONObject input = readJsonFromUrl(url);
+			state = input.getString("state");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		if(state.equals("failed")){
+			return false;
+		}else {
+			return true;
+		}
+
+	}
+
+
 	public Product getProduct(String productId) {
 		JSONObject input = null;
 		String path = basePath;
