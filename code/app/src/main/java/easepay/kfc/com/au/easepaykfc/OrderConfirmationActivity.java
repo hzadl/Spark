@@ -122,31 +122,11 @@ public class OrderConfirmationActivity extends ActionBarActivity {
     public void nextBtnClicked(View view){
         if(isPaid){
             //TODO:print receipt
+            dataProvider.finishOrder(orderNumber);
             Intent intent=new Intent(this,MainActivity.class);
             startActivity(intent);
             this.finish();
-            if (!state.equals("3")) {
-                serviceProvider.connect(new AeviServiceConnectionCallback<PrintService>() {
-                    @Override
-                    public void onConnect(PrintService service) {
 
-                        if (service == null) {
-                            // Print service failed to open, please check the ADB log file for details.
-
-                            return;
-                        }
-
-                        // service connected, have fun
-                        printService = service;
-                        if (null != printService) {
-                            //System.out.println("printed");
-                            printReceipt();
-                            dataProvider.finishOrder(orderNumber);
-                            serviceProvider.close();
-                        }
-                    }
-                });
-            }
         }else{
 
             PaymentRequest payment = new PaymentRequest(new BigDecimal(""+totalPrice));
@@ -169,6 +149,28 @@ public class OrderConfirmationActivity extends ActionBarActivity {
                 thankMessage.setVisibility(View.VISIBLE);
                 isPaid=true;
                 dataProvider.payOrderByOrderNumber(orderNumber);
+//                if (!state.equals("3")) {
+                    serviceProvider.connect(new AeviServiceConnectionCallback<PrintService>() {
+                        @Override
+                        public void onConnect(PrintService service) {
+
+                            if (service == null) {
+                                // Print service failed to open, please check the ADB log file for details.
+
+                                return;
+                            }
+
+                            // service connected, have fun
+                            printService = service;
+                            if (null != printService) {
+                                //System.out.println("printed");
+                                printReceipt();
+
+                                serviceProvider.close();
+                            }
+                        }
+                    });
+                //}
 
 
 
