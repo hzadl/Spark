@@ -75,7 +75,7 @@ public class OrderConfirmationActivity extends ActionBarActivity {
         tvOrderNumber.setText("Order # " + orderNumber);
         products = order.getProducts();
         state = order.getState();
-        System.out.println(state);
+        //System.out.println(state);
 //        isPaid = order.isPaid();
         for(Product p:products){
             content += p.getName()+" $"+p.getPrice()+"\n";
@@ -84,7 +84,7 @@ public class OrderConfirmationActivity extends ActionBarActivity {
         }
         totalPrice=(double)Math.round(totalPrice*100)/100.0;
         list.setText(content);
-        price.setText("" + totalPrice);
+        price.setText("$" + totalPrice);
 
         if(state.equals("1")){
             isPaid=false;
@@ -139,7 +139,7 @@ public class OrderConfirmationActivity extends ActionBarActivity {
                         // service connected, have fun
                         printService = service;
                         if (null != printService) {
-                            System.out.println("printed");
+                            //System.out.println("printed");
                             printReceipt();
                             dataProvider.finishOrder(orderNumber);
                             serviceProvider.close();
@@ -196,7 +196,7 @@ public class OrderConfirmationActivity extends ActionBarActivity {
         //Bitmap preview = this.printService.preview(printPayload, this.printService.getDefaultPrinterSettings());
 
 // print the payload
-       //  printService.print(printPayload);
+         printService.print(printPayload);
     }
 
 
@@ -245,8 +245,8 @@ public class OrderConfirmationActivity extends ActionBarActivity {
 //        payload.append("2   Beer        $6.00 ").align(Alignment.CENTER);
         payload.appendEmptyLine();
         payload.append("    Total       $"+totalPrice).align(Alignment.CENTER).fontStyle(FontStyle.INVERTED_EMPHASIZED);
-        payload.append("Congratulations! You are rewarded with a barcode coupon! ").align(Alignment.CENTER);
-        Bitmap barcode = BitmapFactory.decodeResource(getResources(), R.drawable.staticbarcode, bitmapFactoryOptions);
+        payload.append("Congratulations! You earn a voucher! ").align(Alignment.CENTER);
+        Bitmap barcode = BitmapFactory.decodeResource(getResources(), R.drawable.voucherblack, bitmapFactoryOptions);
         payload.appendEmptyLine();
         payload.append(barcode).align(Alignment.CENTER);
         payload.appendEmptyLine();
