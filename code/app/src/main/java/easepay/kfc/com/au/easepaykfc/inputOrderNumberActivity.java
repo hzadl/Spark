@@ -1,23 +1,15 @@
 package easepay.kfc.com.au.easepaykfc;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import easepay.kfc.com.au.easepaykfc.model.Order;
-import easepay.kfc.com.au.easepaykfc.model.Product;
-
 import easepay.kfc.com.au.easepaykfc.data.DataProviderImpl;
-
 import easepay.kfc.com.au.easepaykfc.model.Order;
-import easepay.kfc.com.au.easepaykfc.model.Product;
 
 
 
@@ -67,12 +59,20 @@ public class inputOrderNumberActivity extends ActionBarActivity {
 
         String orderNumber = edit.getText().toString();
         order=dataProvider.getOrderByOrderNumber(orderNumber);
+
         if(order==null){
             
         }
 
         //TODO:send code to server and validate data, send order information back
         Intent i = new Intent(this, OrderConfirmationActivity.class);
+        Bundle bundle = new Bundle();
+
+        bundle.putString("orderNumber", orderNumber);
+        //bundle.putBoolean("Ismale", true);
+
+
+        i.putExtras(bundle);
         startActivity(i);
     }
 

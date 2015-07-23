@@ -43,11 +43,14 @@ public class OrderConfirmationActivity extends ActionBarActivity {
     Button next;
     TextView thankMessage;
     List<Product> products;
+    String orderNumber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_confirmation);
+        Bundle bundle=this.getIntent().getExtras();
+        orderNumber=bundle.getString("orderNumber");
         TextView list = (TextView) findViewById(R.id.product_list);
         TextView price = (TextView) findViewById(R.id.price);
         thankMessage=(TextView) findViewById(R.id.textView4);
@@ -164,7 +167,7 @@ public class OrderConfirmationActivity extends ActionBarActivity {
         //Bitmap preview = this.printService.preview(printPayload, this.printService.getDefaultPrinterSettings());
 
 // print the payload
-        // printService.print(printPayload);
+         printService.print(printPayload);
     }
 
 
@@ -200,7 +203,7 @@ public class OrderConfirmationActivity extends ActionBarActivity {
         // blank line
         payload.appendEmptyLine();
         // contact no.
-        payload.append("Order#: 1234567890").align(Alignment.CENTER);
+        payload.append("Order#: "+orderNumber).align(Alignment.CENTER);
         // address
         payload.append("Address: KFC RundleMall ");
         // // append a table
